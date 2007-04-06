@@ -12,10 +12,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP SVN View : Browse Repository</title>
-        <script src="../js/prettify.js" type="text/javascript"
+        <script src="js/prettify.js" type="text/javascript"
                 onerror="alert('Error: failed to load ' + this.src)"></script>
-        <link rel="stylesheet" type="text/css" href="../css/prettify.css" />
-        <link rel="stylesheet" href="../css/main.css" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/prettify.css" />
+        <link rel="stylesheet" href="css/main.css" type="text/css">
     </head>
     <body onload="prettyPrint()" >
         <h2><svnview:SvnViewPathDisplayTag/></h2>

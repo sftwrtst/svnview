@@ -48,6 +48,7 @@ public class ShowEntryAction extends Action  implements ActionMappingConstants{
     public ActionForward execute(ActionMapping mapping, ActionForm  form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        try{
         PathForm path = (PathForm)form;
         SVNRepository repository = SvnUrlUtil.getRepository(request);
         Collection entries = repository.getDir(path != null? path.getPath():"", -1, null,
@@ -72,7 +73,12 @@ public class ShowEntryAction extends Action  implements ActionMappingConstants{
              * in the repository at the latest revision (which is meant by a
              * negative revision number).
              */
-            String fp = (path != null? path.getPath():"") + "/" + entry.getRelativePath();
+            String prefix = "";
+            if(path != null && path.getPath() != null && path.getPath().length() > 0){
+                prefix = path.getPath() + "/";
+            }
+            String fp = prefix + entry.getRelativePath();
+            System.out.println(fp);
             SVNLock[] lockA = repository.getLocks(fp);
             if(lockA != null && lockA.length > 0){
                 entry.setLock(lockA[0]);
@@ -87,6 +93,10 @@ public class ShowEntryAction extends Action  implements ActionMappingConstants{
         }
         request.setAttribute("entries", entryList);
         request.setAttribute("entryProps", entryProperties);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return mapping.findForward(SUCCESS);
     }
     

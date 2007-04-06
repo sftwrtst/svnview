@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <META http-equiv="Refresh" content="0;url=./[repos name to view]/ShowEntry.do">
+        <META http-equiv="Refresh" content="0;url=./ShowEntry.do">
         <title>JSP SVN View</title>
     </head>
 </html>

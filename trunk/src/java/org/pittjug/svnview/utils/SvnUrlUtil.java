@@ -12,11 +12,13 @@ package org.pittjug.svnview.utils;
 import javax.servlet.http.HttpServletRequest;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNURL;
+import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
 import org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory;
 import org.tmatesoft.svn.core.internal.io.fs.FSRepositoryFactory;
 import org.tmatesoft.svn.core.internal.io.svn.SVNRepositoryFactoryImpl;
 import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
+import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 /**
  *
@@ -59,8 +61,8 @@ public class SvnUrlUtil {
         while(projectName.endsWith("/")){
             projectName = projectName.substring(0, projectName.length() -1);
         }
-        if(projectName.length() == 0 || repositoryBase.length() == 0){
-            return null;
+        if(projectName.length() == 0){
+            return repositoryBase.trim();
         }
         repositoryName = repositoryBase + "/" + projectName;
         
@@ -78,15 +80,30 @@ public class SvnUrlUtil {
             requestURL = requestURL.substring(1);
         }
         int i = requestURL.indexOf("/");
-        requestURL = requestURL.substring(0, i);
-        request.setAttribute("projectName", requestURL);
-        return requestURL;
+        String pName = "";
+        if(i > -1)
+            pName = requestURL.substring(0, i);
+        request.setAttribute("projectName", pName);
+        return pName;
     }
     
     public static SVNRepository getRepository(HttpServletRequest request)throws SVNException{
         String repositoryBase = request.getSession().getServletContext().getInitParameter("reposBase");
+        String name = request.getSession().getServletContext().getInitParameter("name");
+        String password = request.getSession().getServletContext().getInitParameter("password");
         String reposURL = getRepositoryURL(repositoryBase, getProjectName(request));
-        SVNRepository repository = SVNRepositoryFactory.create(SVNURL.parseURIEncoded(reposURL));
+        SVNRepository repository = null;
+        System.out.println("Repos Base : " + reposURL);
+        System.out.flush();
+        if(repositoryBase.startsWith("http")){
+          repository = DAVRepositoryFactory.create(SVNURL.parseURIEncoded(reposURL));  
+        }else{
+         repository = SVNRepositoryFactory.create(SVNURL.parseURIEncoded(reposURL));
+        }
+        if(name != null && password != null){
+            ISVNAuthenticationManager authManager = SVNWCUtil.createDefaultAuthenticationManager(name, password);
+            repository.setAuthenticationManager(authManager);
+        }
         return repository;
     }
 }

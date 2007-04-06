@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP SVN View : All Locks</title>
-        <link rel="stylesheet" href="../css/main.css" type="text/css">
+        <link rel="stylesheet" href="css/main.css" type="text/css">
         <meta http-equiv="refresh" content="180">
     </head>
     <body>
