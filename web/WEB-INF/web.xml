@@ -2,8 +2,9 @@
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <context-param>
         <param-name>reposBase</param-name>
-        <param-value>[base svn url]</param-value>
+        <param-value>svn://svn/sesco</param-value>
     </context-param>
+
     <servlet>
         <servlet-name>action</servlet-name>
         <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
