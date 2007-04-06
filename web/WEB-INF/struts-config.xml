@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="PathForm" type="org.pittjug.svnview.forms.PathForm"/>
+    </form-beans>
+    
+    <global-exceptions>
+        
+    </global-exceptions>
+    
+    <global-forwards>
+        
+    </global-forwards>
+    
+    <action-mappings>
+        <action name="PathForm" 
+                path="/ShowEntry" 
+                scope="request" 
+                type="org.pittjug.svnview.action.ShowEntryAction">
+            <forward name="success" 
+                     path="/listEntries.jsp"/>
+            <forward name="singleEntry" 
+                     path="/displayEntry.jsp"/>
+        </action>
+        <action name="PathForm" 
+                path="/ShowFileHistory" 
+                scope="request" 
+                type="org.pittjug.svnview.action.ShowFileHistoryAction">
+            <forward name="success" 
+                     path="/showHistory.jsp"/>
+        </action>
+        <action path="/AllLocks" type="org.pittjug.svnview.action.AllLocksAction">
+            <forward name="success" 
+                     path="/showLocks.jsp"/>
+        </action>
+        <action name="PathForm" 
+                path="/ViewFile" 
+                scope="request" 
+                type="org.pittjug.svnview.action.ViewFileAction">
+            <forward name="success" 
+                     path="/viewFile.jsp"/>
+        </action>
+        <action path="/index" 
+                forward="/index.jsp"/>
+    </action-mappings>
+    
+    <controller processorClass="org.pittjug.svnview.processor.SvnViewRequestProcessor"/>
+    
+    <message-resources parameter="org/pittjug/svnview/ApplicationResource"/>    
+    
+</struts-config>
